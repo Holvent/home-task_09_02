@@ -33,12 +33,14 @@ void maxPancakeDown(int i) {
 	}
 	counter1++;
 }
-int findSmallestPosition(int list[], int start, int SIZE2);
-void selectionSort(int list[], int SIZE2);
+int selectionSort(int array[]);
+int selectionSort2(int array[]);
+void createArray(int array[]);
 int main()
 {
 	setlocale(LC_ALL, "");
-	cout << "Home task #9.2.1\n\n";
+	srand(time(NULL));
+	/*cout << "Home task #9.2.1\n\n";
 	//Написать программу «справочник».Создать два одномерных
 	//массива.Один массив хранит номера мобильных телефонов,
 	//второй — домашние телефонные номера.
@@ -64,7 +66,7 @@ int main()
 		{
 			cout << "Пожалуйста, введите данные для каждого клиента\n";
 			isDataEntered = true;
-			for (int i = 0; i < n; i++){
+			for (int i = 0; i < n; i++) {
 				cout << "Введите номер мобильного телефона для ";
 				cout << i + 1 << " клиента:\n";
 				cin >> mobTel[i];
@@ -76,15 +78,15 @@ int main()
 		}
 		case OUTPUT_DATA:
 		{
-			if (isDataEntered){
+			if (isDataEntered) {
 				cout << "Данные клиента:\n";
 				cout << "ID|Мобильный номер|Домашний номер\n";
-				for (int i = 0; i < n; i++){
+				for (int i = 0; i < n; i++) {
 					cout << i + 1 << "|     " << mobTel[i];
 					cout << " \t\t" << tel[i] << "\n";
 				}
 			}
-			else{
+			else {
 				cout << "Нет данных!" << "\n";
 				cout << "Пожалуйста, введите данные для каждого клиента заного\n";
 			}
@@ -92,11 +94,11 @@ int main()
 		}
 		case SORT_BY_MOBILE_NUM:
 		{
-			if (isDataEntered){
+			if (isDataEntered) {
 				cout << "Сортировка данных по мобильному телефону\n";
-				for (int i = 1; i < n; ++i){
-					for (int r = 0; r < n - i; r++){
-						if (mobTel[r] < mobTel[r + 1]){
+				for (int i = 1; i < n; ++i) {
+					for (int r = 0; r < n - i; r++) {
+						if (mobTel[r] < mobTel[r + 1]) {
 							temp = mobTel[r];
 							mobTel[r] = mobTel[r + 1];
 							mobTel[r + 1] = temp; temp = tel[r];
@@ -106,7 +108,7 @@ int main()
 					}
 				}
 			}
-			else{
+			else {
 				cout << "Нет данных!" << "\n";
 				cout << "Пожалуйста, введите данные для каждого клиента заного\n";
 			}
@@ -114,11 +116,11 @@ int main()
 		}
 		case SORT_BY_TEL_NUM:
 		{
-			if (isDataEntered){
+			if (isDataEntered) {
 				cout << "Сортировка по домашним номерам\n";
-				for (int i = 1; i < n; ++i){
-					for (int r = 0; r < n - i; r++){
-						if (tel[r] < tel[r + 1]){
+				for (int i = 1; i < n; ++i) {
+					for (int r = 0; r < n - i; r++) {
+						if (tel[r] < tel[r + 1]) {
 							temp = tel[r];
 							tel[r] = tel[r + 1];
 							tel[r + 1] = temp;
@@ -129,13 +131,13 @@ int main()
 					}
 				}
 			}
-			else{
+			else {
 				cout << "Нет данных!" << "\n";
 				cout << "Пожалуйста, введите данные для каждого клиента заного\n";
 			}
 			break;
 		}
-		case QUIT:{
+		case QUIT: {
 			cout << "Досвидания)";
 			break;
 		}
@@ -156,19 +158,19 @@ int main()
 		cin >> arr[i];
 	}
 	cout << endl;
-	for (int i = 1; i < SIZE1; ++i){
+	for (int i = 1; i < SIZE1; ++i) {
 		counter = 0;
-		for (int r = 0; r < SIZE1 - i; r++){
-			if (arr[r] > arr[r + 1]){
+		for (int r = 0; r < SIZE1 - i; r++) {
+			if (arr[r] > arr[r + 1]) {
 				temp2 = arr[r];
 				arr[r] = arr[r + 1];
 				arr[r + 1] = temp2;
 				counter++;
 			}
 		}
-		if (counter == 0){
+		if (counter == 0) {
 			cout << "Cортировкa завершилась на ";
-			cout << i-1 << " шаге\n";
+			cout << i - 1 << " шаге\n";
 			break;
 		}
 	}
@@ -199,13 +201,87 @@ int main()
 		cout << pancakes[i] << " ";
 	}
 	cout << "\n\nПотребовалось перевернуть " << counter1 << " раз\n";
-	cout << "\n\nHome task #9.2.4\n\n";
+	cout << "\n\nHome task #9.2.4\n\n";*/
 	//Написать программу, которая сравнивает число перестановок элементов 
 	//при использовании сортировки «пузырьком» (усовершенствованная версия задани я 2) 
 	//и методом выбора.Выполнить ее тестирование на разных 10 массивах,
 	//содержащих 1000 случайных элементов, вычислить среднее
 	//число перестановок для каждого метода после тестирования
-	const int SIZE2 = 1000;
+	int count1 = 0;
+	int count2 = 0;
+	int array[1000];
+
+	for (int i = 0; i < 10; i++){
+		createArray(array);
+		count1 += selectionSort2 (array);
+		count2 += selectionSort (array);
+	}
+	cout << count1 << " - Пузырьком, среднее значение - " << count1 / 10<<endl;
+	cout << count2 << " - Выбором среднее значение - " << count2 / 10 << endl;
+	
+}
+void createArray(int array[]) {
+	const int a = 10;
+	for (int i = 0; i < a; i++) {
+		array[i] = rand() % 100;
+	}
+	for (int i = 0; i < a; i++)
+	{
+		cout << array[i] << " ";
+	}
+	cout << endl;
+}
+int selectionSort2 (int array[]) {
+	int temp;
+	int count1 = 0;
+	int sum = 0;
+	for (int i = 0; i < 1000; i++) {
+		sum = 0;
+		for (int j = 0; j < 1000 - 1; j++) {
+			if (array[j] > array[j + 1]) {
+				temp = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = temp;
+				count1++;
+			}
+			if (count1 == 0) {
+				sum += i;
+				break;
+			}
+		}
+	}
+	cout << endl;
+	return sum;
+}
+int selectionSort(int array[]) {
+	int i, j, k;
+	int temp;
+	int count = 0;
+	int sum1 = 0;
+	for (i = 0; i < 1000; i++) {
+		k = i;
+		temp = array[i];
+		count = 0;
+		for (j = 1 + i; j < 1000; j++) {
+			if (array[j] < temp) {
+				k = j;
+				temp = array[j];
+				count++;
+			}
+		}
+		if (k != i) {
+			array[k] = array[i];
+			array[i] = temp;
+		}
+		if (count == 0) {
+			sum1 += i;
+			break;
+		}
+	}
+	return sum1;
+}
+
+	/*const int SIZE2 = 1000;
 	int list[SIZE2]{};
 	for (int i = 0; i < SIZE2; i++) {
 		list[i] = rand() % 100;
@@ -251,4 +327,4 @@ void selectionSort(int list[], int SIZE2)
 		swap(list[i], list[smallest]);
 	}
 	return;
-}
+}*/
